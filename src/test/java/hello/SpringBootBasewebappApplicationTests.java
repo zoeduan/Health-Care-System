@@ -7,8 +7,8 @@ import java.util.Collection;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-
-//@RunWith(SpringRunner.class)
+import hello.*
+;//@RunWith(SpringRunner.class)
 //@SpringBootTest
 public class SpringBootBasewebappApplicationTests {
 	@Test
@@ -25,7 +25,6 @@ public class SpringBootBasewebappApplicationTests {
  
         // this will output "hello world", since that was what the mock object was told to return
         System.out.println(arrayList.get(0));
-		
 	}
 
 	//@Test
