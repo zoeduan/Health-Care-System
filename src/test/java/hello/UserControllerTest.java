@@ -5,35 +5,24 @@ package hello;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThat;
-
-import java.util.List;
-
-import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import hello.MainController;
 import hello.UserRepository;
 
+//@RunWith(SpringRunner.class)
+//@WebMvcTest(value = MainController.class, secure = false)
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = MainController.class, secure = false)
+@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration("classpath:testContext.xml")
+@ContextConfiguration("/applicationContext.xml")
 public class UserControllerTest {
-
-	@Autowired
-	private TestEntityManager entityManager;
+	
+	@InjectMocks
+	private MainController userController;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -46,8 +35,9 @@ public class UserControllerTest {
 		User user = new User();
 		user.setId(1L);
 		user.setName("zoe");
-		user.setEmail("zoe@uncc.edu");
-		this.entityManager.persist( user );
+		user.setEmail("zoe@test.com");
+		this.userRepository.save(user);
+		//this.entityManager.persist( user );
 		User userTest = this.userRepository.findOne((long) 1);
 		assertThat(userTest.getId()).isEqualTo(1);	
 	}
